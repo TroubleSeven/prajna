@@ -56,6 +56,9 @@ export class OfferAPI {
                 termLength,
            }
         */
+
+        // principalTokenIndex =  new BinNumber(1);
+        // termLength = new BigNumber(4);
         let principalTokenIndex = await this.contracts.getTokenIndexBySymbolAsync(principalToken);
         let termLengthExpire = new TimeInterval(termDuration,termUnit);
         //let termLength = termLengthExpire.fromTimestamp(new BigNumber(lastBlock.timestamp));
@@ -69,11 +72,9 @@ export class OfferAPI {
             amortizationUnit,
             termLength,
         }
-        // principalTokenIndex =  new BinNumber(1);
-        // termLength = new BigNumber(4);
 
         let wapperTermsContractParameter = new wapperTermsContractParameters(this.web3,this.contracts);;
-        let termsContractParametersByte = wapperTermsContractParameter.packParameters(packedParms);
+        let termsContractParams_wrap32Byte = wapperTermsContractParameter.packParameters(packedParms);
 
 
         let signedCreditorOfferparams = {
@@ -92,7 +93,7 @@ export class OfferAPI {
             creditorFee: new BigNumber(0),
             debtorFee: new BigNumber(0),
             expirationTimestampInSec: new BigNumber(expirationTimestampInSec),
-            termsContractParameters: termsContractParametersByte,
+            termsContractParameters: termsContractParams_wrap32Byte,
             minPrincipalAmount: new BigNumber(minPrincipleAmount),
         };
 
